@@ -1,6 +1,17 @@
 <template>
-  <div class="collection"><slot></slot></div>
+  <div class="container">
+    <loading-spinner v-if="loading"></loading-spinner>
+    <div class="collection">
+      <slot></slot>
+    </div>
+  </div>
 </template>
+
+<script>
+export default {
+  props: ["loading"],
+};
+</script>
 
 <style lang="scss" scoped>
 .collection {

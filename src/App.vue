@@ -25,6 +25,7 @@ export default {
 
 body {
   background-color: lighten($light, 10%);
+  overflow-y: overlay;
 }
 
 li {

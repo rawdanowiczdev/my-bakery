@@ -33,6 +33,11 @@ export default {
       menuOpen: false,
     };
   },
+  watch: {
+    $route() {
+      this.menuOpen = false;
+    },
+  },
   methods: {
     toggleMenu() {
       this.menuOpen = !this.menuOpen;
@@ -126,6 +131,10 @@ nav {
       &:hover {
         border-bottom: $green 3px solid;
       }
+    }
+
+    a.router-link-active {
+      border-bottom: $green 3px solid;
     }
   }
 

@@ -41,7 +41,7 @@
   justify-content: center;
 
   &__icon {
-    margin: 20px;
+    margin: 0 20px;
     width: 80px;
     height: 80px;
   }

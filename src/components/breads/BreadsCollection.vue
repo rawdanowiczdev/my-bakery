@@ -9,7 +9,7 @@
     </template>
 
     <template #section>
-      <base-collection>
+      <base-collection :loading="loading">
         <div v-for="bread in breads" :key="bread">
           <h4>{{ bread.name }}</h4>
           <img :src="bread.imageURL" :alt="bread.name" />
@@ -24,13 +24,20 @@ export default {
   data() {
     return {
       breads: [],
+      loading: false,
     };
   },
   methods: {
     getBreads() {
+      this.breads = [];
+      this.loading = true;
+
       fetch("https://rawdanowiczdev.pl/bakery-api/breads/")
         .then((response) => response.json())
-        .then((data) => (this.breads = data))
+        .then((data) => {
+          this.loading = false;
+          this.breads = data;
+        })
         .catch((err) => console.log(err));
     },
   },
