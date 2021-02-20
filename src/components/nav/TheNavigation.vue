@@ -8,7 +8,7 @@
         <router-link class="menu__link" to="/breads">Breads</router-link>
       </li>
       <li>
-        <router-link class="menu__link" to="/">Rolls</router-link>
+        <router-link class="menu__link" to="/rolls">Rolls</router-link>
       </li>
       <li>
         <router-link class="menu__link" to="/">Add new</router-link>
