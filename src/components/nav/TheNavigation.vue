@@ -5,7 +5,7 @@
         <router-link class="menu__link" to="/">Home</router-link>
       </li>
       <li>
-        <router-link class="menu__link" to="/">Breads</router-link>
+        <router-link class="menu__link" to="/breads">Breads</router-link>
       </li>
       <li>
         <router-link class="menu__link" to="/">Rolls</router-link>
