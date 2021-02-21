@@ -12,6 +12,7 @@ export default {
 @import "../../assets/scss/colors";
 
 button {
+  margin: 5px;
   padding: 10px 20px;
   font-size: 18px;
   font-weight: 700;

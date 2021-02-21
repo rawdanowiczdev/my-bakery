@@ -12,7 +12,11 @@
       <base-collection :loading="loading">
         <div v-for="bread in breads" :key="bread">
           <h4>{{ bread.name }}</h4>
-          <img :src="bread.imageURL" :alt="bread.name" />
+          <img
+            :src="bread.imageURL"
+            :alt="bread.name"
+            @click="showDetails(bread._id)"
+          />
         </div>
       </base-collection>
     </template>
@@ -39,6 +43,9 @@ export default {
           this.breads = data;
         })
         .catch((err) => console.log(err));
+    },
+    showDetails(id) {
+      this.$router.push(`/breads/${id}`);
     },
   },
 };

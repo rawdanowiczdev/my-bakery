@@ -14,6 +14,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../assets/scss/colors";
+
 .collection {
   margin: 20px auto;
   width: 100vw;
@@ -29,6 +31,7 @@ export default {
     margin-top: 5px;
     width: 300px;
     transition: transform 0.2s;
+    box-shadow: 0 0 6px 0px $gray;
     cursor: pointer;
 
     &:hover {
