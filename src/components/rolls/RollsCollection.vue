@@ -12,7 +12,11 @@
       <base-collection :loading="loading">
         <div v-for="roll in rolls" :key="roll">
           <h4>{{ roll.name }}</h4>
-          <img :src="roll.imageURL" :alt="roll.name" />
+          <img
+            :src="roll.imageURL"
+            :alt="roll.name"
+            @click="showDetails(roll._id)"
+          />
         </div>
       </base-collection>
     </template>
@@ -39,6 +43,9 @@ export default {
           this.rolls = data;
         })
         .catch((err) => console.log(err));
+    },
+    showDetails(id) {
+      this.$router.push(`/rolls/${id}`);
     },
   },
 };

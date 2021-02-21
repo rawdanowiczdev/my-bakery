@@ -5,8 +5,8 @@
     </template>
 
     <template #button>
-      <base-button mode="yellow">PATCH {{ collection }}</base-button>
-      <base-button mode="red">DELETE {{ collection }}</base-button>
+      <base-button mode="yellow">PATCH {{ type }}</base-button>
+      <base-button mode="red">DELETE {{ type }}</base-button>
     </template>
 
     <template #section>
@@ -27,11 +27,15 @@ export default {
   props: ["item"],
   data() {
     return {
-      collection: null,
+      type: null,
     };
   },
   created() {
-    this.collection = this.$route.path.split("/")[1];
+    if (this.$route.path.split("/")[1] === "breads") {
+      this.type = "bread";
+    } else if (this.$route.path.split("/")[1] === "rolls") {
+      this.type = "roll";
+    }
   },
 };
 </script>
