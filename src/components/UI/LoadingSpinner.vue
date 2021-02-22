@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../../assets/scss/colors";
 
 .loading {
@@ -42,6 +42,13 @@
       left: 56px;
       animation: loading3 0.6s infinite;
     }
+  }
+
+  &--container {
+    margin: 0 auto;
+    max-width: 680px;
+    display: flex;
+    justify-content: center;
   }
 }
 

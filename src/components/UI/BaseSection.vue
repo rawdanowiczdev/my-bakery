@@ -47,7 +47,6 @@
     margin: 10px auto;
     width: 95vw;
     max-width: 320px;
-    box-shadow: 0 0 6px 0px $gray;
   }
 
   li {

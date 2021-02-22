@@ -24,13 +24,14 @@
 
 <script>
 export default {
-  props: ["item"],
+  props: ["item", "loading"],
   data() {
     return {
       type: null,
     };
   },
   created() {
+    console.log(this.$route);
     if (this.$route.path.split("/")[1] === "breads") {
       this.type = "bread";
     } else if (this.$route.path.split("/")[1] === "rolls") {

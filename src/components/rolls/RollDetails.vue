@@ -1,5 +1,8 @@
 <template>
   <base-details v-if="roll" :item="roll"></base-details>
+  <div class="loading--container" v-else>
+    <loading-spinner></loading-spinner>
+  </div>
 </template>
 
 <script>

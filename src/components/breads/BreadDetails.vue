@@ -1,5 +1,8 @@
 <template>
   <base-details v-if="bread" :item="bread"></base-details>
+  <div class="loading--container" v-else>
+    <loading-spinner></loading-spinner>
+  </div>
 </template>
 
 <script>
