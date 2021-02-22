@@ -1,13 +1,13 @@
 <template>
-  <Navigation />
+  <TheNavigation />
   <routerView />
 </template>
 
 <script>
-import Navigation from "@/components/nav/TheNavigation.vue";
+import TheNavigation from "@/components/nav/TheNavigation.vue";
 
 export default {
-  components: { Navigation },
+  components: { TheNavigation },
 };
 </script>
 
@@ -21,6 +21,8 @@ export default {
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
   color: $black;
+  letter-spacing: 1.4px;
+  line-height: 1.5;
 }
 
 body {

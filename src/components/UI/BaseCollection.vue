@@ -27,7 +27,7 @@ export default {
   justify-content: center;
   justify-items: center;
 
-  img {
+  &__image {
     margin-top: 5px;
     width: 300px;
     transition: transform 0.2s;

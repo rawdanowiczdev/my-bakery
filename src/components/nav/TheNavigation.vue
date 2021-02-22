@@ -14,9 +14,7 @@
         <router-link class="menu__link" to="/">Add new</router-link>
       </li>
       <li>
-        <router-link class="menu__link menu__link--token" to="/"
-          >Get token</router-link
-        >
+        <router-link class="menu__link" to="/token">Get token</router-link>
       </li>
     </ul>
 

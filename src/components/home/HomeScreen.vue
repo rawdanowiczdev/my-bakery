@@ -9,7 +9,7 @@
     </template>
 
     <template #section>
-      <p>
+      <p class="section__text">
         My Bakery is a set of visual tools for controlling BakeryAPI. It
         utilizes all of the features that API provides, there's nothing you
         can't do here. Read the

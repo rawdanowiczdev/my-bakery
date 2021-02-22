@@ -13,6 +13,7 @@
         <div v-for="roll in rolls" :key="roll">
           <h4>{{ roll.name }}</h4>
           <img
+            class="collection__image"
             :src="roll.imageURL"
             :alt="roll.name"
             @click="showDetails(roll._id)"

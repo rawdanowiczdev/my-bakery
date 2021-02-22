@@ -10,12 +10,14 @@
     </template>
 
     <template #section>
-      <img :src="item.imageURL" :alt="item.name" />
-      <p>{{ item.description }}</p>
+      <img class="section__image" :src="item.imageURL" :alt="item.name" />
+      <p class="section__text">{{ item.description }}</p>
       <div v-if="item.grains">
         <h4>Grains:</h4>
-        <ul>
-          <li v-for="grain in item.grains" :key="grain">{{ grain }}</li>
+        <ul class="section__list">
+          <li class="section__item" v-for="grain in item.grains" :key="grain">
+            {{ grain }}
+          </li>
         </ul>
       </div>
     </template>
@@ -31,7 +33,6 @@ export default {
     };
   },
   created() {
-    console.log(this.$route);
     if (this.$route.path.split("/")[1] === "breads") {
       this.type = "bread";
     } else if (this.$route.path.split("/")[1] === "rolls") {

@@ -13,6 +13,7 @@
         <div v-for="bread in breads" :key="bread">
           <h4>{{ bread.name }}</h4>
           <img
+            class="collection__image"
             :src="bread.imageURL"
             :alt="bread.name"
             @click="showDetails(bread._id)"

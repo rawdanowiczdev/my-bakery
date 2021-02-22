@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../../assets/scss/colors";
 
 .container {
@@ -38,23 +38,60 @@
   align-items: center;
   flex-wrap: wrap;
 
-  p,
-  ul {
+  &__text,
+  &__list {
     margin: 10px auto;
   }
 
-  img {
+  &__image {
     margin: 10px auto;
     width: 95vw;
     max-width: 320px;
   }
 
-  li {
+  &__item {
     display: inline;
 
     &::after {
       content: ", ";
     }
+  }
+
+  &__form {
+    margin: auto;
+
+    &-element {
+      margin: 10px auto;
+      width: 340px;
+      max-width: 90vw;
+      display: flex;
+      flex-direction: column;
+
+      &--check {
+        display: block;
+      }
+    }
+
+    &-input {
+      margin: 2px 0;
+      padding: 2px;
+      font-size: 20px;
+
+      &--check {
+        margin: 2px 10px 2px 0;
+        height: 16px;
+        width: 16px;
+      }
+    }
+  }
+
+  &__error {
+    width: 90vw;
+    max-width: 480px;
+    padding: 5px;
+    border-radius: 2px;
+    color: $red;
+    background-color: rgba($red, 0.1);
   }
 }
 </style>
