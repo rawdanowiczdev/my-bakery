@@ -5,7 +5,13 @@
     </template>
 
     <template #button>
-      <base-button mode="yellow">PATCH {{ type }}</base-button>
+      <base-button
+        mode="yellow"
+        type="submit"
+        @click="$emit('patch')"
+        form="bread-patch-form"
+        >PATCH {{ type }}</base-button
+      >
       <base-button mode="red">DELETE {{ type }}</base-button>
     </template>
 
@@ -27,6 +33,7 @@
 <script>
 export default {
   props: ["item", "loading"],
+  emits: ["patch"],
   data() {
     return {
       type: null,

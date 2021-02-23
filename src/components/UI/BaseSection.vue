@@ -40,6 +40,8 @@
 
   &__text,
   &__list {
+    width: 90vw;
+    max-width: 680px;
     margin: 10px auto;
   }
 
@@ -86,12 +88,33 @@
   }
 
   &__error {
+    margin: auto;
     width: 90vw;
     max-width: 480px;
     padding: 5px;
     border-radius: 2px;
     color: $red;
     background-color: rgba($red, 0.1);
+  }
+
+  &__success {
+    margin: auto;
+    padding: 5px;
+    word-break: break-all;
+    position: relative;
+    border-radius: 2px;
+    color: $green;
+    background-color: rgba($green, 0.1);
+    animation: success 0.2s;
+  }
+
+  @keyframes success {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 }
 </style>

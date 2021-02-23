@@ -57,7 +57,7 @@
 
       <div v-if="token">
         <h4>Your Token:</h4>
-        <p class="section__text token" ref="token">
+        <p class="section__text section__success token" ref="token">
           {{ token }}
           <span class="token__copy" @click="copy">Copy</span>
         </p>
@@ -119,6 +119,7 @@ export default {
           })
           .then((data) => {
             this.token = data.token;
+            this.resend = false;
             this.$refs.form.reset();
           })
           .catch((err) => {
@@ -141,14 +142,6 @@ export default {
 @import "../../assets/scss/colors";
 
 .token {
-  padding: 5px;
-  word-break: break-all;
-  position: relative;
-  border-radius: 2px;
-  color: $green;
-  background-color: rgba($green, 0.1);
-  animation: showToken 0.2s;
-
   &__copy {
     visibility: hidden;
     display: block;
@@ -165,15 +158,6 @@ export default {
   &:hover &__copy,
   &:focus &__copy {
     visibility: visible;
-  }
-
-  @keyframes showToken {
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
-    }
   }
 }
 </style>

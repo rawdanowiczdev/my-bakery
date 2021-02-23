@@ -11,7 +11,7 @@
         <router-link class="menu__link" to="/rolls">Rolls</router-link>
       </li>
       <li>
-        <router-link class="menu__link" to="/">Add new</router-link>
+        <router-link class="menu__link" to="/add">Add new</router-link>
       </li>
       <li>
         <router-link class="menu__link" to="/token">Get token</router-link>
