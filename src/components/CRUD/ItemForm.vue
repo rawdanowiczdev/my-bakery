@@ -66,6 +66,7 @@
         type="text"
         autocomplete="off"
         ref="token"
+        @focus="tokenTouched = true"
       />
     </div>
   </form>
@@ -81,7 +82,7 @@
 
 <script>
 export default {
-  props: ["formID", "operation", "item", "itemType"],
+  props: ["formID", "operation", "patchItem", "patchCollecion"],
   data() {
     return {
       errors: [],
@@ -92,14 +93,18 @@ export default {
       imageURL: "",
       grains: "",
       grainsTouched: false,
+      tokenTouched: false,
     };
   },
   emits: ["update"],
   computed: {
     collection() {
-      if (this.itemType === "bread" || this.typeSelect === "Breads") {
+      if (this.patchCollecion === "Breads" || this.typeSelect === "Breads") {
         return "Breads";
-      } else if (this.itemType === "rolls" || this.typeSelect === "Rolls") {
+      } else if (
+        this.patchCollecion === "Rolls" ||
+        this.typeSelect === "Rolls"
+      ) {
         return "Rolls";
       } else {
         return null;
@@ -108,12 +113,12 @@ export default {
     uri() {
       if (this.collection === "Breads") {
         if (this.operation === "patch") {
-          return `https://rawdanowiczdev.pl/bakery-api/breads/${this.item._id}`;
+          return `https://rawdanowiczdev.pl/bakery-api/breads/${this.patchItem._id}`;
         }
         return "https://rawdanowiczdev.pl/bakery-api/breads/";
       } else {
         if (this.operation === "patch") {
-          return `https://rawdanowiczdev.pl/bakery-api/rolls/${this.item._id}`;
+          return `https://rawdanowiczdev.pl/bakery-api/rolls/${this.patchItem._id}`;
         }
         return "https://rawdanowiczdev.pl/bakery-api/rolls/";
       }
@@ -121,11 +126,10 @@ export default {
   },
   created() {
     if (this.operation === "patch") {
-      const item = JSON.parse(JSON.stringify(this.item));
-      this.name = item.name;
-      this.description = item.description;
-      this.imageURL = item.imageURL;
-      this.grains = item.grains;
+      this.name = this.patchItem.name;
+      this.description = this.patchItem.description;
+      this.imageURL = this.patchItem.imageURL;
+      this.grains = this.patchItem.grains;
     }
   },
   methods: {
@@ -133,7 +137,7 @@ export default {
       this.success = null;
       this.errors.length = 0;
 
-      const newItem = {
+      const item = {
         name: this.name,
         description: this.description,
         imageURL: this.imageURL,
@@ -143,46 +147,52 @@ export default {
       if (!this.collection && this.operation === "post") {
         this.errors.push("Please choose collection.");
       }
-      if (newItem.name.length < 3 || newItem.name.length > 30) {
+
+      if (item.name.length < 3 || item.name.length > 30) {
         this.errors.push("Name should contain between 3 and 30 characters.");
       }
-      if (newItem.description.length < 5 || newItem.description.length > 500) {
+
+      if (item.description.length < 5 || item.description.length > 500) {
         this.errors.push(
           "Description should contain between 5 and 500 characters."
         );
       }
-      if (!newItem.imageURL.includes("https://")) {
+
+      if (!item.imageURL.includes("https://") && !item.imageURL.includes(".")) {
         this.errors.push("Image should be valid https URL.");
       }
+
       if (this.collection === "Breads") {
-        newItem.grains = this.grains;
+        item.grains = this.grains;
         if (
           (this.grains !== "" && this.operation === "post") ||
           (this.grains !== "" &&
             this.operation === "patch" &&
             this.grainsTouched)
         ) {
-          newItem.grains = this.grains.split(",");
+          item.grains = this.grains.split(",");
         }
-        if (newItem.grains.length < 1 || newItem.grains.length > 10) {
+        if (item.grains.length < 1 || item.grains.length > 10) {
           this.errors.push("You should add at least 1 and maximum 10 grains.");
         }
       }
-      if (token.length < 270) {
+
+      if (token.length < 270 && this.tokenTouched) {
         this.errors.push("Please enter valid token.");
       }
 
-      if (this.errors.length === 0) {
+      if (this.errors.length === 0 && this.tokenTouched) {
         fetch(this.uri, {
           method: this.operation.toUpperCase(),
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(newItem),
+          body: JSON.stringify(item),
         })
           .then((response) => {
             if (response.ok) {
+              this.$emit("update");
               if (this.operation === "post") {
                 this.$refs.form.reset();
                 this.typeSelect = null;
@@ -197,7 +207,6 @@ export default {
           })
           .then((data) => {
             this.success = data;
-            this.$emit("update");
           })
           .catch((err) => {
             console.log(err);

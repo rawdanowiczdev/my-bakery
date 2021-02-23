@@ -1,16 +1,17 @@
 <template>
   <ItemForm
-    v-if="showPatch"
+    v-if="showForm"
     formID="bread-patch-form"
     operation="patch"
-    :item="bread"
-    itemType="bread"
+    :patchItem="bread"
+    patchCollecion="Breads"
     @update="getBread"
   />
   <base-details
     v-if="bread"
     :item="bread"
-    @patch="showPatch = true"
+    form="bread-patch-form"
+    @patch="showForm = true"
   ></base-details>
   <div class="loading--container" v-else>
     <loading-spinner></loading-spinner>
@@ -26,11 +27,13 @@ export default {
     return {
       id: this.$route.params.id,
       bread: null,
-      showPatch: false,
+      showForm: false,
     };
   },
   methods: {
     getBread() {
+      this.showForm = false;
+
       fetch(`https://rawdanowiczdev.pl/bakery-api/breads/${this.id}`)
         .then((response) => {
           if (!response.ok) {

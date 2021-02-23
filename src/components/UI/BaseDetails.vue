@@ -9,7 +9,7 @@
         mode="yellow"
         type="submit"
         @click="$emit('patch')"
-        form="bread-patch-form"
+        :form="form"
         >PATCH {{ type }}</base-button
       >
       <base-button mode="red">DELETE {{ type }}</base-button>
@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  props: ["item", "loading"],
+  props: ["item", "loading", "form"],
   emits: ["patch"],
   data() {
     return {

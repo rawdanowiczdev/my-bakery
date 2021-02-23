@@ -11,7 +11,7 @@
     </template>
 
     <template #section>
-      <ItemForm formID="create-form" operation="post" item="" itemType="" />
+      <ItemForm formID="create-form" operation="post" />
     </template>
   </base-section>
 </template>
