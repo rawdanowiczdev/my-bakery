@@ -7,12 +7,18 @@
     <template #button>
       <base-button
         mode="yellow"
+        form="item-form"
         type="submit"
         @click="$emit('patch')"
-        :form="form"
         >PATCH {{ type }}</base-button
       >
-      <base-button mode="red">DELETE {{ type }}</base-button>
+      <base-button
+        mode="red"
+        form="item-form"
+        type="submit"
+        @click="$emit('delete')"
+        >DELETE {{ type }}</base-button
+      >
     </template>
 
     <template #section>
@@ -32,8 +38,8 @@
 
 <script>
 export default {
-  props: ["item", "loading", "form"],
-  emits: ["patch"],
+  props: ["item", "loading"],
+  emits: ["patch", "delete"],
   data() {
     return {
       type: null,

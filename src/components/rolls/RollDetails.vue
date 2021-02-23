@@ -1,17 +1,16 @@
 <template>
   <ItemForm
     v-if="showForm"
-    formID="roll-patch-form"
-    operation="patch"
-    :patchItem="roll"
-    patchCollecion="Rolls"
+    :operation="request"
+    :reqItem="roll"
+    reqCollection="Rolls"
     @update="getRoll"
   />
   <base-details
     v-if="roll"
     :item="roll"
-    form="roll-patch-form"
-    @patch="showForm = true"
+    @patch="patchReq"
+    @delete="deleteReq"
   ></base-details>
   <div class="loading--container" v-else>
     <loading-spinner></loading-spinner>
@@ -25,9 +24,10 @@ export default {
   components: { ItemForm },
   data() {
     return {
+      request: null,
       id: this.$route.params.id,
       roll: null,
-      showForm: false,
+      showForm: true,
     };
   },
   methods: {
@@ -47,6 +47,14 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    patchReq() {
+      this.request = "patch";
+      this.showForm = true;
+    },
+    deleteReq() {
+      this.request = "delete";
+      this.showForm = true;
     },
   },
   created() {

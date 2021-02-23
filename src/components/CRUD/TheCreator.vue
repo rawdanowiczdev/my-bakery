@@ -5,13 +5,13 @@
     </template>
 
     <template #button>
-      <base-button mode="green" type="submit" form="create-form"
+      <base-button mode="green" type="submit" form="item-form"
         >POST object</base-button
       >
     </template>
 
     <template #section>
-      <ItemForm formID="create-form" operation="post" />
+      <ItemForm operation="post" />
     </template>
   </base-section>
 </template>

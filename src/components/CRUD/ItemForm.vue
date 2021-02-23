@@ -1,61 +1,67 @@
 <template>
   <form
-    :id="formID"
+    id="item-form"
     class="section__form"
     ref="form"
     @submit.prevent="submitForm"
   >
-    <div class="section__form-element" v-if="operation === 'post'">
-      <label for="collection">Collection</label>
-      <select class="section__form-input" id="collection" v-model="typeSelect">
-        <option>Breads</option>
-        <option>Rolls </option>
-      </select>
-    </div>
+    <div v-if="operation !== 'delete'">
+      <div class="section__form-element" v-if="operation === 'post'">
+        <label for="collection">Collection</label>
+        <select
+          class="section__form-input"
+          id="collection"
+          v-model="typeSelect"
+        >
+          <option>Breads</option>
+          <option>Rolls </option>
+        </select>
+      </div>
 
-    <div class="section__form-element">
-      <label for="name">Name</label>
-      <input
-        class="section__form-input"
-        id="name"
-        type="text"
-        autocomplete="off"
-        v-model="name"
-      />
-    </div>
+      <div class="section__form-element">
+        <label for="name">Name</label>
+        <input
+          class="section__form-input"
+          id="name"
+          type="text"
+          autocomplete="off"
+          v-model="name"
+        />
+      </div>
 
-    <div class="section__form-element">
-      <label for="description">Description</label>
-      <input
-        class="section__form-input"
-        id="description"
-        type="text"
-        autocomplete="off"
-        v-model="description"
-      />
-    </div>
+      <div class="section__form-element">
+        <label for="description">Description</label>
+        <input
+          class="section__form-input"
+          id="description"
+          type="text"
+          autocomplete="off"
+          v-model="description"
+        />
+      </div>
 
-    <div class="section__form-element">
-      <label for="image">Image URL</label>
-      <input
-        class="section__form-input"
-        id="image"
-        type="text"
-        autocomplete="off"
-        v-model="imageURL"
-      />
-    </div>
+      <div class="section__form-element">
+        <label for="image">Image URL</label>
+        <input
+          class="section__form-input"
+          id="image"
+          type="text"
+          autocomplete="off"
+          v-model="imageURL"
+        />
+      </div>
 
-    <div class="section__form-element" v-if="collection === 'Breads'">
-      <label for="grains">Grains</label>
-      <input
-        class="section__form-input"
-        id="grains"
-        type="text"
-        autocomplete="off"
-        v-model="grains"
-        @input="grainsTouched = true"
-      />
+      <div class="section__form-element" v-if="collection === 'Breads'">
+        <label for="grains">Grains</label>
+        <input
+          class="section__form-input"
+          id="grains"
+          type="text"
+          autocomplete="off"
+          v-model="grains"
+          @input="grainsTouched = true"
+        />
+      </div>
     </div>
 
     <div class="section__form-element">
@@ -82,7 +88,7 @@
 
 <script>
 export default {
-  props: ["formID", "operation", "patchItem", "patchCollecion"],
+  props: ["operation", "reqItem", "reqCollection"],
   data() {
     return {
       errors: [],
@@ -99,10 +105,10 @@ export default {
   emits: ["update"],
   computed: {
     collection() {
-      if (this.patchCollecion === "Breads" || this.typeSelect === "Breads") {
+      if (this.reqCollection === "Breads" || this.typeSelect === "Breads") {
         return "Breads";
       } else if (
-        this.patchCollecion === "Rolls" ||
+        this.reqCollection === "Rolls" ||
         this.typeSelect === "Rolls"
       ) {
         return "Rolls";
@@ -112,13 +118,13 @@ export default {
     },
     uri() {
       if (this.collection === "Breads") {
-        if (this.operation === "patch") {
-          return `https://rawdanowiczdev.pl/bakery-api/breads/${this.patchItem._id}`;
+        if (this.operation === "patch" || this.operation === "delete") {
+          return `https://rawdanowiczdev.pl/bakery-api/breads/${this.reqItem._id}`;
         }
         return "https://rawdanowiczdev.pl/bakery-api/breads/";
       } else {
-        if (this.operation === "patch") {
-          return `https://rawdanowiczdev.pl/bakery-api/rolls/${this.patchItem._id}`;
+        if (this.operation === "patch" || this.operation === "delete") {
+          return `https://rawdanowiczdev.pl/bakery-api/rolls/${this.reqItem._id}`;
         }
         return "https://rawdanowiczdev.pl/bakery-api/rolls/";
       }
@@ -126,10 +132,10 @@ export default {
   },
   created() {
     if (this.operation === "patch") {
-      this.name = this.patchItem.name;
-      this.description = this.patchItem.description;
-      this.imageURL = this.patchItem.imageURL;
-      this.grains = this.patchItem.grains;
+      this.name = this.reqItem.name;
+      this.description = this.reqItem.description;
+      this.imageURL = this.reqItem.imageURL;
+      this.grains = this.reqItem.grains;
     }
   },
   methods: {
@@ -137,43 +143,50 @@ export default {
       this.success = null;
       this.errors.length = 0;
 
+      const token = this.$refs.token.value;
       const item = {
         name: this.name,
         description: this.description,
         imageURL: this.imageURL,
       };
-      const token = this.$refs.token.value;
 
-      if (!this.collection && this.operation === "post") {
-        this.errors.push("Please choose collection.");
-      }
-
-      if (item.name.length < 3 || item.name.length > 30) {
-        this.errors.push("Name should contain between 3 and 30 characters.");
-      }
-
-      if (item.description.length < 5 || item.description.length > 500) {
-        this.errors.push(
-          "Description should contain between 5 and 500 characters."
-        );
-      }
-
-      if (!item.imageURL.includes("https://") && !item.imageURL.includes(".")) {
-        this.errors.push("Image should be valid https URL.");
-      }
-
-      if (this.collection === "Breads") {
-        item.grains = this.grains;
-        if (
-          (this.grains !== "" && this.operation === "post") ||
-          (this.grains !== "" &&
-            this.operation === "patch" &&
-            this.grainsTouched)
-        ) {
-          item.grains = this.grains.split(",");
+      if (this.operation !== "delete") {
+        if (!this.collection && this.operation === "post") {
+          this.errors.push("Please choose collection.");
         }
-        if (item.grains.length < 1 || item.grains.length > 10) {
-          this.errors.push("You should add at least 1 and maximum 10 grains.");
+
+        if (item.name.length < 3 || item.name.length > 30) {
+          this.errors.push("Name should contain between 3 and 30 characters.");
+        }
+
+        if (item.description.length < 5 || item.description.length > 500) {
+          this.errors.push(
+            "Description should contain between 5 and 500 characters."
+          );
+        }
+
+        if (
+          !item.imageURL.includes("https://") ||
+          !item.imageURL.includes(".")
+        ) {
+          this.errors.push("Image should be valid https URL.");
+        }
+
+        if (this.collection === "Breads") {
+          item.grains = this.grains;
+          if (
+            (this.grains !== "" && this.operation === "post") ||
+            (this.grains !== "" &&
+              this.operation === "patch" &&
+              this.grainsTouched)
+          ) {
+            item.grains = this.grains.split(",");
+          }
+          if (item.grains.length < 1 || item.grains.length > 10) {
+            this.errors.push(
+              "You should add at least 1 and maximum 10 grains."
+            );
+          }
         }
       }
 
@@ -188,11 +201,14 @@ export default {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(item),
+          body: this.operation === "delete" ? null : JSON.stringify(item),
         })
           .then((response) => {
             if (response.ok) {
               this.$emit("update");
+              if (this.operation === "delete") {
+                this.$router.push("../");
+              }
               if (this.operation === "post") {
                 this.$refs.form.reset();
                 this.typeSelect = null;
