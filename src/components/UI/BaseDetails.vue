@@ -7,16 +7,16 @@
     <template #button>
       <base-button
         mode="yellow"
-        form="item-form"
+        :form="operation === 'patch' ? 'item-form' : ''"
         type="submit"
-        @click="$emit('patch')"
+        @click="onPatch"
         >PATCH {{ type }}</base-button
       >
       <base-button
         mode="red"
-        form="item-form"
+        :form="operation === 'delete' ? 'item-form' : ''"
         type="submit"
-        @click="$emit('delete')"
+        @click="onDelete"
         >DELETE {{ type }}</base-button
       >
     </template>
@@ -43,7 +43,18 @@ export default {
   data() {
     return {
       type: null,
+      operation: null,
     };
+  },
+  methods: {
+    onPatch() {
+      this.$emit("patch");
+      this.operation = "patch";
+    },
+    onDelete() {
+      this.$emit("delete");
+      this.operation = "delete";
+    },
   },
   created() {
     if (this.$route.path.split("/")[1] === "breads") {

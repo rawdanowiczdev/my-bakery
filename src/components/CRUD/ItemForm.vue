@@ -57,6 +57,7 @@
           class="section__form-input"
           id="grains"
           type="text"
+          placeholder="Separated by ,"
           autocomplete="off"
           v-model="grains"
           @input="grainsTouched = true"
@@ -206,9 +207,6 @@ export default {
           .then((response) => {
             if (response.ok) {
               this.$emit("update");
-              if (this.operation === "delete") {
-                this.$router.push("../");
-              }
               if (this.operation === "post") {
                 this.$refs.form.reset();
                 this.typeSelect = null;
@@ -222,10 +220,12 @@ export default {
             this.errors.push(`${response.status} ${response.statusText}`);
           })
           .then((data) => {
-            this.success = data;
+            this.success = `Message: ${data.message} ${JSON.stringify(
+              data.item
+            )}`;
           })
           .catch((err) => {
-            console.log(err);
+            this.errors.push(err);
           });
       }
     },

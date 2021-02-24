@@ -11,8 +11,8 @@
     <template #section>
       <p class="section__text">
         My Bakery is a set of visual tools for controlling BakeryAPI. It
-        utilizes all of the features that API provides, there's nothing you
-        can't do here. Read the
+        utilizes all of the features that API provides. To use POST, PATCH and
+        DELETE methods first you need to get a Token. Read the
         <a
           class="link"
           href="https://github.com/rawdanowiczdev/bakery-api"
@@ -20,7 +20,16 @@
           target="_blank"
           >Docs</a
         >
-        to learn to how to use it in detail. Enjoy!
+        to learn how does the API work in detail. If you're interested in this
+        website's code you can check it on my
+        <a
+          class="link"
+          href="https://github.com/rawdanowiczdev/my-bakery"
+          rel="noopener"
+          target="_blank"
+          >GitHub</a
+        >
+        as well. Enjoy!
       </p>
       <hr />
       <HomeIcons />
@@ -52,6 +61,7 @@ export default {
 }
 
 .link {
+  text-transform: uppercase;
   font-weight: 700;
   color: $green;
 }
