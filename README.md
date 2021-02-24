@@ -28,4 +28,4 @@ npm run lint
 
 ### Favicon
 
-![Favicon](https://github.com/rawdanowiczdev/portfolio/blob/main/public/favicon.png) Favicon created by [Freepik](https://www.freepik.com/).
+![Favicon](https://github.com/rawdanowiczdev/my-bakery/blob/main/public/favicon.png) Favicon created by [Freepik](https://www.freepik.com/).
